@@ -1,0 +1,12 @@
+  
+textarea {
+    min-height: 200px;
+  }
+  
+  .items {
+    cursor: pointer;
+  }
+  
+  .read {
+    background-color: #808080;
+  }
