@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{title}}</h2>
+    <hr>
+    {% if listExist %}
+      <div class="row ">
+        {% for item in list %}
+             <div class="col-lg-3 col-md-6">
+                <div class="card" style='height:510px;margin:10px 0px;'>
+                  {% if item.imgURL %}
+                     <div class="view overlay">
+                   <img class="image" src={{item.imgURL}}>
+                    </div>
+                  {% endif %}
+                   <div class="card-body">
+                    <h4 class="card-title" style='color:deepskyblue'>{{item.title}}</h4>
+                     <p class="card-text">{{item.description|linebreaksbr|slice:":150" }}</p>
+                    {% comment %}
+                    <br><br> {% endcomment %}
+                    <form action="listing/{{item.title}}">
+                       <button type="submit" class="btn btn-light-blue btn-md">View</button>
+                    </form>
+                     <h5 style='margin-left:220px;'>Price: £{{item.price}}</h5>
+                  </div>
+                  </div>
+              </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <h3>No Items</h3>
+    {% endif %}
+{% endblock %}

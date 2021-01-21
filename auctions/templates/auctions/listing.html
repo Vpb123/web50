@@ -1,0 +1,68 @@
+{% extends "auctions/layout.html" %}
+{% block title %}
+{{item.title}}
+{% endblock %}
+
+{% if message %}
+<h3 style="color:red;">{{message}}</h3>
+{% endif %}
+
+{% block body %}
+  <div class='row'>
+    <div class='col-lg-4 col-md-4'>
+    <h1>{{item.title}}</h1>
+    {% if win %}
+      <h1>You Bidded Highest! Congrats!</h1>
+    {% endif %}
+    <img src="{{item.imgURL}}" style='height:400px;width:400px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;'>
+    <h3 style='padding:10px;margin-top:30px'>PRICE : £{{item.price}}</h3>
+    </div>
+    <div class='col-lg-4 col-md-4'>
+    <h3>Description</h3>
+    <br>
+    <p>{{item.description}}</p>
+    {% if not anon %}
+      {% if not own %}
+      <form action="/bid/{{item.title}}" method="post">
+        {% csrf_token %}
+        <label class='h5' for="bid">Enter your bid: </label>
+        <input class='form-control' style='width:200px' type="number" min="1" step="0.01" name=bid value="{{item.price}}">
+        <button style='margin-top:5px' type="submit" class="btn btn-primary">Place Bid</button>
+      </form>
+      {% endif %}
+      {% if not watching %}
+      <form  action="/watchlist/add/{{item.title}}">
+        <button style='margin:30px;margin-left:3px;width:85px' type="submit" class="btn btn-success">Watch</button>
+      </form>
+      {% else %}
+      <form action="/watchlist/remove/{{item.title}}">
+        <button  style='margin:30px;margin-left:3px;' type="submit" class="btn btn-danger">Stop Watching</button>
+      </form>
+      {% endif %}
+      {% if own %}
+        <a style='padding-top:20px' href="/ended/{{item.title}}">End your listing</a>
+      {% endif %}
+      <form action="comment/{{item.title}}" method="post">
+        {% csrf_token %}
+        <label class='h5'style='color:grey;' for="comment">Comment: </label>
+        <input class='form-control' style='width:200px' type="text" name="comment" value="Enter Your Comment">
+        <button type="submit" class="btn btn-success">Send</button>
+      </form>
+      {% if comments %}
+      <br>
+    {% endif %}
+    <h2>Comments</h2>
+    <ul class="list-group">
+      {%for comment in comments %}
+        <li class="list-group-item">{{comment.user}} -> {{comment.entry}}({{comment.added_date}})</li>
+        <div class='divider'></div>
+      {%endfor%}
+    </ul>
+    {% endif %}
+  </div>
+  </div>
+
+{% endblock %}
