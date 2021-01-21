@@ -1,2 +1,2 @@
-- LIVE: https://leo-network.herokuapp.com/
-- YOUTUBE: https://www.youtube.com/watch?v=8-V2YDcNa1U
+- LIVE: https://tweetf.herokuapp.com/
+- YOUTUBE: https://youtu.be/WfhFi16Hmo8
